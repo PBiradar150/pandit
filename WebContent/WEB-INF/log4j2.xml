@@ -1,0 +1,34 @@
+<Configuration status="WARN">
+	<Properties>
+		<Property name="log-path">/Users/23760/Desktop</Property>
+		<Property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} | %X{userId} | %X{id} | %X{ipAddress} | %-5.5p | [%t] | %C | %msg%n</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${pattern}"/>
+		</Console>
+		<RollingFile name="RollingFile" fileName="${log-path}/myapp.log"
+			filePattern="${log-path}/myapp-%d{yyyy-MM-dd}-%i.log" >
+			<PatternLayout>
+				<pattern>${pattern}</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+			<DefaultRolloverStrategy max="4"/>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="org.springframework" level="warn" additivity="false">
+			<AppenderRef ref="Console"/>
+		</Logger>
+		<!--Logger name="com.cts" level="debug" additivity="false">
+			<AppenderRef ref="RollingFile"/>
+		</Logger-->
+		<Root level="debug">
+			<AppenderRef ref="RollingFile"/>
+			<AppenderRef ref="Console"/>
+		</Root>
+	</Loggers>
+
+</Configuration>
